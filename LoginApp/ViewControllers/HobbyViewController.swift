@@ -12,11 +12,16 @@ class HobbyViewController: UIViewController {
     @IBOutlet weak var hobbyLabel: UILabel!
     @IBOutlet weak var hobbyImage: UIImageView!
 
-    private let person = User.Person(imagePerson: "Image")
+    var user: User!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        hobbyLabel.text = person.hobbyPerson
-        hobbyImage.image = UIImage.init(named: person.imagePerson)
+        hobbyLabel.text = user.person.hobby
+        hobbyImage.image = UIImage.init(named: user.person.image)
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let activityVC = segue.destination as? ActivityViewController else { return }
+        activityVC.user = user
+    }
+  
 }

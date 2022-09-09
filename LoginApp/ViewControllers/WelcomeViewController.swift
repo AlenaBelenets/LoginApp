@@ -12,8 +12,8 @@ class WelcomeViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var greetingUserName: UILabel!
 
-    // MARK: - Public Properties
-    let person = User.Person(imagePerson: "")
+    // MARK: - Private Properties
+    var user: User!
 
     // MARK: - Private Properties
     private let primaryColor = UIColor(
@@ -34,7 +34,7 @@ class WelcomeViewController: UIViewController {
         super.viewDidLoad()
         view.addVerticalGradientLayer(topColor:primaryColor,
                                       bottomColor: secondaryColor)
-        greetingUserName.text = "Welcome, \(person.personName)!"
+        greetingUserName.text = "Welcome, \(user.person.fullName)!"
     }
     
 }

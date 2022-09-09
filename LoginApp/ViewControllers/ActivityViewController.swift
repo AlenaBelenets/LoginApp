@@ -12,11 +12,12 @@ class ActivityViewController: UIViewController {
     @IBOutlet weak var activityLabel: UILabel!
     @IBOutlet weak var activityImage: UIImageView!
 
-    let person = User.Person(imagePerson: "Image-1")
+    var user: User!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityLabel.text = person.activityPerson
-        activityImage.image = UIImage.init(named: person.imagePerson)
+        activityLabel.text = user.person.activity
+        activityImage.image = UIImage.init(named: "Image-2")
     }
+   
 }

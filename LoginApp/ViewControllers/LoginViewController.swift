@@ -16,20 +16,27 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var logInButton: UIButton!
 
     // MARK: - Private properties
-    var user = User()
+    private let user = User.getUserData()
 
     // MARK: - Override Methods
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        nameLabel.text = user.login
+        passwordLabel.text = user.userPassword
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let tabBarVC = segue.destination as? UITabBarController else { return }
         guard let viewControllers = tabBarVC.viewControllers else { return }
 
-        viewControllers.forEach { viewController in
-            if let secondVC = viewController as? EducationViewController {
-                secondVC.view.backgroundColor = .gray
-            } else if let thirdVC = viewController as? HobbyViewController {
-                thirdVC.view.backgroundColor = .lightGray
-            } else if let fourthVC = viewController as? ActivityViewController {
-                fourthVC.view.backgroundColor = .opaqueSeparator
+        viewControllers.forEach {
+            if let welcomeVC = $0 as? WelcomeViewController {
+                welcomeVC.user = user
+            } else if let navigationVC = $0 as? UINavigationController {
+                guard
+                    let hobbyVC = navigationVC.topViewController as? HobbyViewController
+                else { return }
+                hobbyVC.user = user
             }
         }
     }
@@ -41,7 +48,7 @@ class LoginViewController: UIViewController {
 
 //     MARK: - Actions
     @IBAction func doneButtonPressed() {
-        guard nameLabel.text == user.userName || nameLabel.text == user.userPassword else {
+        guard nameLabel.text == user.login || nameLabel.text == user.userPassword else {
             showAlert(
                 title: "Invalid login or password",
                 message: "Please, enter correct login or password",
@@ -54,7 +61,7 @@ class LoginViewController: UIViewController {
 
     @IBAction func getNameOrPassword(_ sender: UIButton) {
         sender.tag == 0
-        ? showAlert(title: "Oops!", message: "Your name is \(user.userName) 😊")
+        ? showAlert(title: "Oops!", message: "Your name is \(user.login) 😊")
         : showAlert(title: "Oops!", message: "Your password is \(user.userPassword) 😊")
 
     }
